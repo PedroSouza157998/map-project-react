@@ -7,6 +7,7 @@ import api from '../utils/api';
 import Input from '../components/input';
 import { useCallback } from 'react';
 import { Dialog } from 'primereact/dialog';
+import { toast } from 'react-toastify';
 
 
 export default function ListUsers() {
@@ -18,16 +19,27 @@ export default function ListUsers() {
     const [visibleRoute, setVisibleRoute] = useState(false)
     const [filter, setFilter] = useState('')
 
-    useEffect(() => {
-        api.get('client/getAll').then(({ data }) => {
-            setClients(data.data)
-        })
-    }, [])
+    const fetchAllClients = async () => {
+        const { data } = await api.get('client/getAll')
+        setClients(data.data)
+    }
 
     const fetchRoute = useCallback(async () => {
         const { data } = await api.get('client/findRoute')
         setClientsRoute(data.data)
         setVisibleRoute(true)
+    }, [])
+
+    const deleteRow = useCallback(async (id) => {
+        const {data} = await api.delete(`client/delete/${id}`)
+        if(data.success) {
+            fetchAllClients();
+            toast.success('Cliente excluido com sucesso!')
+        } else toast.error('Não foi possível excluir o cliente. Tente novamente.')
+    }, [])
+
+    useEffect(() => {
+        fetchAllClients()
     }, [])
 
     return (
@@ -75,6 +87,9 @@ export default function ListUsers() {
 
                             return str.replace(regex, "($1) $2-$3");
                         }} />
+                    <Column field="actions" header="" style={{ minWidth: '12rem' }} body={(row) => 
+                        <Button className='text-red-600' icon="pi pi-trash" onClick={() => deleteRow(row.id)}/>
+                    } />
                 </DataTable>
             </div>
             <Dialog header="Rota:" visible={visibleRoute} style={{ width: '50vw' }} onHide={() => setVisibleRoute(false)}>

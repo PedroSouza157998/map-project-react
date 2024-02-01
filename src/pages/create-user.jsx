@@ -31,6 +31,14 @@ export default function CreateUser() {
     return (
         <div className="flex justify-center bg-slate-300 h-screen w-screen">
             <form onSubmit={handleSubmit} className="flex gap-4 bg-white w-full h-fit p-12 mt-12 flex-col items-end sm:w-6/12">
+                <header className="flex w-full items-center gap-3">
+                    <Button 
+                        onClick={() => navigate('/')}
+                        icon="pi pi-arrow-left" 
+                        className="text-black bg-white rounded-full p-5 w-10 hover:bg-gray-200" 
+                        />
+                    <h1 className="text-4xl">Cadastrar Cliente</h1>
+                </header>
                 <div className="flex flex-col w-full">
                     <label htmlFor="nome" className="mb-2">Nome</label>
                     <Input maxLength={100} className='border p-2' id="nome" value={nome} onChange={(e) => setNome(e.target.value)} />
