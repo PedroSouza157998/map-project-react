@@ -33,7 +33,7 @@ export default function CreateUser() {
             <form onSubmit={handleSubmit} className="flex gap-4 bg-white w-full h-fit p-12 mt-12 flex-col items-end sm:w-6/12">
                 <div className="flex flex-col w-full">
                     <label htmlFor="nome" className="mb-2">Nome</label>
-                    <Input className='border p-2' id="nome" value={nome} onChange={(e) => setNome(e.target.value)} />
+                    <Input maxLength={100} className='border p-2' id="nome" value={nome} onChange={(e) => setNome(e.target.value)} />
                 </div>
                 <div className="flex flex-col w-full">
                     <label htmlFor="telefone" className="mb-2">Telefone</label>
@@ -46,7 +46,7 @@ export default function CreateUser() {
                 </div>
                 <div className="flex flex-col w-full">
                     <label htmlFor="email" className="mb-2">Email</label>
-                    <Input className='border p-2' id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <Input maxLength={100} className='border p-2' id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
 
                 <div className="flex flex-col w-full justify-between flex-wrap gap-4 md:flex-row">
